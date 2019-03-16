@@ -261,5 +261,9 @@ __pycache__/
 *.pyc
 
 
-# Files to ignore for this repository
+# File types to ignore for this repository
 *.csproj
+*.resx
+
+# Folders to ignore for this repository
+ConditionsPrototype/Properties/
