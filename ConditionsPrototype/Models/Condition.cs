@@ -75,9 +75,9 @@ namespace ConditionsPrototype.Models
             }
         }
 
-        public Operator conditionOperator { get; set;}
+        public Operator ConditionOperator { get; set;}
 
-        public Connector conditionConnector { get; set; }
+        public Connector ConditionConnector { get; set; }
 
         private Variable leftObject { get; set; }
 
@@ -144,49 +144,49 @@ namespace ConditionsPrototype.Models
         {
             this.ItemType = ItemType.Static;
             this.rightObject = 0;
-            this.conditionOperator = Enum.Operator.EqualTo;
+            this.ConditionOperator = Enum.Operator.EqualTo;
             this.grouping = Grouping.NoGrouping;
-            this.conditionConnector = Connector.And;
+            this.ConditionConnector = Connector.And;
         }
 
         public Condition(Variable leftValue, Operator op, Variable rightValue, Grouping grouping, Connector connector)
         {
             this.leftObject = leftValue;
-            this.conditionOperator = op;
+            this.ConditionOperator = op;
             this.ItemType = ItemType.Dynamic;
             this.rightObject = rightValue;
             this.grouping = grouping;
-            this.conditionConnector = connector;
+            this.ConditionConnector = connector;
         }
 
         public Condition(Variable leftValue, Operator op, float rightValue, Grouping grouping, Connector connector)
         {
             this.leftObject = leftValue;
-            this.conditionOperator = op;
+            this.ConditionOperator = op;
             this.ItemType = ItemType.Static;
             this.RightItem = rightValue;
             this.grouping = grouping;
-            this.conditionConnector = connector;
+            this.ConditionConnector = connector;
         }
 
         public Condition(Variable leftValue, Operator op, Variable rightValue)
         {
             this.leftObject = leftValue;
-            this.conditionOperator = op;
+            this.ConditionOperator = op;
             this.ItemType = ItemType.Dynamic;
             this.rightObject = rightValue;
             this.grouping = Grouping.NoGrouping;
-            this.conditionConnector = Connector.And;
+            this.ConditionConnector = Connector.And;
         }
 
         public Condition(Variable leftValue, Operator op, float rightValue)
         {
             this.leftObject = leftValue;
-            this.conditionOperator = op;
+            this.ConditionOperator = op;
             this.ItemType = ItemType.Static;
             this.rightObject = rightValue;
             this.grouping = Grouping.NoGrouping;
-            this.conditionConnector = Connector.And;
+            this.ConditionConnector = Connector.And;
         }
 
         public object[] GetObject()
@@ -195,10 +195,10 @@ namespace ConditionsPrototype.Models
 
             oa[0] = this.LeftGrouping;
             oa[1] = this.LeftItem.Name;
-            oa[2] = this.conditionOperator;
+            oa[2] = this.ConditionOperator;
             oa[3] = this.RightItem;
             oa[4] = this.RightGrouping;
-            oa[5] = this.conditionConnector;
+            oa[5] = this.ConditionConnector;
 
             return oa;
         }
@@ -207,7 +207,7 @@ namespace ConditionsPrototype.Models
         {
             get
             {
-                switch (this.conditionOperator.Name)
+                switch (ConditionOperator.Name)
                 {
                     case Operator.OperatorName.EqualTo:
                         return LeftValue == RightValue;

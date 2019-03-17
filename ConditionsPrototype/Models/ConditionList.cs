@@ -103,44 +103,36 @@ namespace ConditionsPrototype.Models
         private bool Evaluate(ConditionList conditions)
         {
             //If conditions are empty return true
-            if (conditions.Count == 0)
-            {
-                return true;
-            }
+            //if (conditions.Count == 0)
+            //{
+            //    return true;
+            //}
 
-            //If there is only one condition return that items outcome
-            if (conditions.Count == 1)
-            {
-                return conditions[0].Outcome;
-            }
+            ////If there is only one condition return that items outcome
+            //if (conditions.Count == 1)
+            //{
+            //    return conditions[0].Outcome;
+            //}
 
-            // Find open groupings if they exist
-            var startIndex = conditions.FindNextOpen();
+            //// Find open groupings if they exist
+            //var startIndex = conditions.FindNextOpen();
 
-            if (startIndex != -1)
-            {
-                var endIndex = conditions.FindNextEnd();
+            //if (startIndex != -1)
+            //{
+            //    var endIndex = conditions.FindNextEnd();
 
-                if (endIndex != -1)
-                {
-                    if (startIndex <= endIndex)
-                    {
-                        // 
-                    }
-                }
-            }
-            else
-            {
-                // Handle stuff
-            }
-
-
-
-
-
-
-
-
+            //    if (endIndex != -1)
+            //    {
+            //        if (startIndex <= endIndex)
+            //        {
+            //            // 
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    // Handle stuff
+            //}
 
 
 
@@ -159,6 +151,10 @@ namespace ConditionsPrototype.Models
             }
 
 
+            bool current = true;
+            Connector currentConnector;
+
+
             // For splicing in the correct answer for a group
             for (int i = 0; i < conditions.Count; i++)
             {
@@ -171,6 +167,11 @@ namespace ConditionsPrototype.Models
                         throw new InvalidProgramException();
                     }
                     else if (i == groupEnd)
+                    {
+                        current = conditions[i].Outcome;
+                        currentConnector = conditions[i].ConditionConnector;
+                    }
+                    else if (true)
                     {
 
                     }
