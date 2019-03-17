@@ -97,7 +97,7 @@ namespace ConditionsPrototype.Models
         private object rightObject { get; set; }
         public ItemType ItemType { get; set; }
 
-        public object RightValue
+        public object RightItem
         {
             get
             {
@@ -121,6 +121,22 @@ namespace ConditionsPrototype.Models
             set
             {
                 rightObject = value;
+            }
+        }
+
+        public float LeftValue
+        {
+            get
+            {
+                return LeftItem.Value;
+            }
+        }
+
+        public float RightValue
+        {
+            get
+            {
+                return ItemType == ItemType.Dynamic ? ((Variable)rightObject).Value : (float)rightObject;
             }
         }
 
@@ -148,7 +164,7 @@ namespace ConditionsPrototype.Models
             this.leftObject = leftValue;
             this.conditionOperator = op;
             this.ItemType = ItemType.Static;
-            this.RightValue = rightValue;
+            this.RightItem = rightValue;
             this.grouping = grouping;
             this.conditionConnector = connector;
         }
@@ -180,11 +196,35 @@ namespace ConditionsPrototype.Models
             oa[0] = this.LeftGrouping;
             oa[1] = this.LeftItem.Name;
             oa[2] = this.conditionOperator;
-            oa[3] = this.RightValue;
+            oa[3] = this.RightItem;
             oa[4] = this.RightGrouping;
             oa[5] = this.conditionConnector;
 
             return oa;
+        }
+
+        public bool Outcome
+        {
+            get
+            {
+                switch (this.conditionOperator.Name)
+                {
+                    case Operator.OperatorName.EqualTo:
+                        return LeftValue == RightValue;
+                    case Operator.OperatorName.NotEqualTo:
+                        return LeftValue != RightValue;
+                    case Operator.OperatorName.GreaterThan:
+                        return LeftValue > RightValue;
+                    case Operator.OperatorName.GreaterThanOrEqualTo:
+                        return LeftValue >= RightValue;
+                    case Operator.OperatorName.LessThan:
+                        return LeftValue < RightValue;
+                    case Operator.OperatorName.LessThanOrEqualTo:
+                        return LeftValue <= RightValue;
+                    default:
+                        throw new InvalidOperationException();
+                }
+            }
         }
         
     }

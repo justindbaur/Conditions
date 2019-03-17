@@ -14,6 +14,11 @@ namespace ConditionsPrototype.Models
             conditions = new List<Condition>();
         }
 
+        private ConditionList(List<Condition> conditions)
+        {
+            this.conditions = conditions;
+        }
+
         public List<Condition> conditions { get; set; }
 
         public Condition this[int index]
@@ -37,6 +42,11 @@ namespace ConditionsPrototype.Models
             conditions.Add(item);
         }
 
+        private ConditionList GetRange(int index, int count)
+        {
+            return new ConditionList(conditions.GetRange(index, count));
+        }
+
         public void Clear()
         {
             conditions.Clear();
@@ -50,6 +60,11 @@ namespace ConditionsPrototype.Models
         public void CopyTo(Condition[] array, int arrayIndex)
         {
             conditions.CopyTo(array, arrayIndex);
+        }
+
+        public int FindIndex(Predicate<Condition> match)
+        {
+            return conditions.FindIndex(match);
         }
 
         public IEnumerator<Condition> GetEnumerator()
@@ -67,39 +82,50 @@ namespace ConditionsPrototype.Models
             return conditions.GetEnumerator();
         }
 
-        public bool Evaluate()
+        public bool Outcome
         {
-            return Evaluate(conditions.ToList());
+            get
+            {
+                return Evaluate(this);
+            }
         }
 
-        private bool Evaluate(List<Condition> conditions)
+        private bool Evaluate(ConditionList conditions)
         {
+            //If conditions are empty return true
             if (conditions.Count == 0)
             {
                 return true;
             }
 
-            for (int i = 0; i < conditions.Count; i++)
+            //If there is only one condition return that items outcome
+            if (conditions.Count == 1)
             {
-                if (conditions[i].LeftGrouping)
+                return conditions[0].Outcome;
+            }
+
+            // Find open groupings if they exist
+            var startIndex = conditions.FindNextOpen();
+
+            if (startIndex != -1)
+            {
+                var endIndex = conditions.FindNextEnd();
+
+                if (endIndex)
                 {
-                    return true;
+
                 }
             }
-            return true;
         }
 
-        private int GetClose(int start)
+        private int FindNextOpen()
         {
-            for (int i = start; i < conditions.Count; i++)
-            {
-                if (conditions[i].RightGrouping)
-                {
-                    return i;
-                }
-            }
+            return conditions.FindIndex(con => con.LeftGrouping);
+        }
 
-            return -1;
+        private int FindNextEnd()
+        {
+            return conditions.FindIndex(con => con.RightGrouping);
         }
     }
 }
