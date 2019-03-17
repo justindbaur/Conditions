@@ -164,7 +164,16 @@ namespace ConditionsPrototype.Models
             {
                 if (conditions[i].LeftGrouping)
                 {
+                    var groupEnd = conditions.FindGroupEnd(i);
 
+                    if (groupEnd == -1)
+                    {
+                        throw new InvalidProgramException();
+                    }
+                    else if (i == groupEnd)
+                    {
+
+                    }
                 }
             }
 
@@ -180,35 +189,22 @@ namespace ConditionsPrototype.Models
             return conditions.FindIndex(con => con.RightGrouping);
         }
 
-        private bool DoGroupsMatch(int openGroupIndex, int closeGroupIndex)
+        private int FindGroupEnd(int start)
         {
-            // The open grouping index must be less than or equal to the close group index
-            if (closeGroupIndex < openGroupIndex)
-            {
-                throw new IndexOutOfRangeException();
-            }
-
-            // If there are no conditions in the list they cannot match
             if (conditions.Count == 0)
             {
-                return false;
+                return -1;
             }
 
             // If the condition in the opening group index does not open a group then return false
-            if (!conditions[openGroupIndex].LeftGrouping)
+            if (!conditions[start].LeftGrouping)
             {
-                return false;
-            }
-
-            // If the condition in the close group index does not close a group then return false
-            if (!conditions[closeGroupIndex].RightGrouping)
-            {
-                return false;
+                return -1;
             }
 
             int count = 0;
 
-            for (int i = openGroupIndex; i < conditions.Count; i++)
+            for (int i = start; i < conditions.Count; i++)
             {
                 // 
                 if (conditions[i].LeftGrouping)
@@ -225,14 +221,10 @@ namespace ConditionsPrototype.Models
                 // 
                 if (count == 0)
                 {
-                    if (i == closeGroupIndex)
-                    {
-                        return true;
-                    }
-                    return false;
+                    return i;
                 }
             }
-            return false;
+            return -1;
         }
     }
 }
