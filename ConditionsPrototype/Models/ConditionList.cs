@@ -160,20 +160,21 @@ namespace ConditionsPrototype.Models
             {
                 if (conditions[i].LeftGrouping)
                 {
-                    var groupEnd = conditions.FindGroupEnd(i);
+                    var groupCount = conditions.FindGroupLength(i);
 
-                    if (groupEnd == -1)
+                    if (groupCount == -1)
                     {
+                        // A valid group end could not be found for the group start. Configuration must be wrong
                         throw new InvalidProgramException();
                     }
-                    else if (i == groupEnd)
+                    else if (groupCount == 0)
                     {
-                        current = conditions[i].Outcome;
-                        currentConnector = conditions[i].ConditionConnector;
+                        //Group is just itself
                     }
-                    else if (true)
+                    else
                     {
-
+                        //Insert the sub items list back into the main list
+                        conditions[i + groupCount] = Evaluate(new ConditionList(conditions.GetRange(i, groupCount).ToList()));
                     }
                 }
             }
@@ -190,7 +191,12 @@ namespace ConditionsPrototype.Models
             return conditions.FindIndex(con => con.RightGrouping);
         }
 
-        private int FindGroupEnd(int start)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <returns></returns>
+        private int FindGroupLength(int start)
         {
             if (conditions.Count == 0)
             {
@@ -203,26 +209,28 @@ namespace ConditionsPrototype.Models
                 return -1;
             }
 
+            int groupEnd = 0;
             int count = 0;
 
             for (int i = start; i < conditions.Count; i++)
             {
+                count++;
                 // 
                 if (conditions[i].LeftGrouping)
                 {
-                    count++;
+                    groupEnd++;
                 }
 
                 // 
                 if (conditions[i].RightGrouping)
                 {
-                    count--;
+                    groupEnd--;
                 }
 
                 // 
-                if (count == 0)
+                if (groupEnd == 0)
                 {
-                    return i;
+                    return count;
                 }
             }
             return -1;
