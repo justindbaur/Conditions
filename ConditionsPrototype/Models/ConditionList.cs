@@ -67,6 +67,16 @@ namespace ConditionsPrototype.Models
             return conditions.FindIndex(match);
         }
 
+        public int FindIndex(int startIndex, Predicate<Condition> match)
+        {
+            return conditions.FindIndex(startIndex, match);
+        }
+
+        public int FindIndex(int startIndex, int count, Predicate<Condition> match)
+        {
+            return conditions.FindIndex(startIndex, count, match);
+        }
+
         public IEnumerator<Condition> GetEnumerator()
         {
             return conditions.GetEnumerator();
@@ -111,11 +121,53 @@ namespace ConditionsPrototype.Models
             {
                 var endIndex = conditions.FindNextEnd();
 
-                if (endIndex)
+                if (endIndex != -1)
+                {
+                    if (startIndex <= endIndex)
+                    {
+                        // 
+                    }
+                }
+            }
+            else
+            {
+                // Handle stuff
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            if (conditions.Count == 0)
+            {
+                return true;
+            }
+
+            if (conditions.Count == 1)
+            {
+                return conditions[0].Outcome;
+            }
+
+
+            // For splicing in the correct answer for a group
+            for (int i = 0; i < conditions.Count; i++)
+            {
+                if (conditions[i].LeftGrouping)
                 {
 
                 }
             }
+
         }
 
         private int FindNextOpen()
@@ -126,6 +178,61 @@ namespace ConditionsPrototype.Models
         private int FindNextEnd()
         {
             return conditions.FindIndex(con => con.RightGrouping);
+        }
+
+        private bool DoGroupsMatch(int openGroupIndex, int closeGroupIndex)
+        {
+            // The open grouping index must be less than or equal to the close group index
+            if (closeGroupIndex < openGroupIndex)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            // If there are no conditions in the list they cannot match
+            if (conditions.Count == 0)
+            {
+                return false;
+            }
+
+            // If the condition in the opening group index does not open a group then return false
+            if (!conditions[openGroupIndex].LeftGrouping)
+            {
+                return false;
+            }
+
+            // If the condition in the close group index does not close a group then return false
+            if (!conditions[closeGroupIndex].RightGrouping)
+            {
+                return false;
+            }
+
+            int count = 0;
+
+            for (int i = openGroupIndex; i < conditions.Count; i++)
+            {
+                // 
+                if (conditions[i].LeftGrouping)
+                {
+                    count++;
+                }
+
+                // 
+                if (conditions[i].RightGrouping)
+                {
+                    count--;
+                }
+
+                // 
+                if (count == 0)
+                {
+                    if (i == closeGroupIndex)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            return false;
         }
     }
 }
