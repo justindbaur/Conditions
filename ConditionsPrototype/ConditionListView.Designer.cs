@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.dgvConditions = new System.Windows.Forms.DataGridView();
-            this.OpenGrouping = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.LeftItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Operator = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RightItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CloseGrouping = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Connection = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAddNew = new System.Windows.Forms.Button();
             this.btnModify = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnExecute = new System.Windows.Forms.Button();
+            this.cbOpenGrouping = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.txtLeftItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtOperator = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtRightItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbCloseGrouping = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.txtConnection = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConditions)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,54 +48,21 @@
             this.dgvConditions.AllowUserToDeleteRows = false;
             this.dgvConditions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvConditions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.OpenGrouping,
-            this.LeftItem,
-            this.Operator,
-            this.RightItem,
-            this.CloseGrouping,
-            this.Connection});
+            this.cbOpenGrouping,
+            this.txtLeftItem,
+            this.txtOperator,
+            this.txtRightItem,
+            this.cbCloseGrouping,
+            this.txtConnection});
             this.dgvConditions.Location = new System.Drawing.Point(12, 12);
             this.dgvConditions.MultiSelect = false;
             this.dgvConditions.Name = "dgvConditions";
+            this.dgvConditions.ReadOnly = true;
             this.dgvConditions.RowHeadersVisible = false;
             this.dgvConditions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvConditions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvConditions.Size = new System.Drawing.Size(473, 368);
             this.dgvConditions.TabIndex = 0;
-            // 
-            // OpenGrouping
-            // 
-            this.OpenGrouping.HeaderText = "(";
-            this.OpenGrouping.Name = "OpenGrouping";
-            this.OpenGrouping.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.OpenGrouping.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.OpenGrouping.Width = 25;
-            // 
-            // LeftItem
-            // 
-            this.LeftItem.HeaderText = "Left Item";
-            this.LeftItem.Name = "LeftItem";
-            // 
-            // Operator
-            // 
-            this.Operator.HeaderText = "Operator";
-            this.Operator.Name = "Operator";
-            // 
-            // RightItem
-            // 
-            this.RightItem.HeaderText = "Right Item";
-            this.RightItem.Name = "RightItem";
-            // 
-            // CloseGrouping
-            // 
-            this.CloseGrouping.HeaderText = ")";
-            this.CloseGrouping.Name = "CloseGrouping";
-            this.CloseGrouping.Width = 25;
-            // 
-            // Connection
-            // 
-            this.Connection.HeaderText = "Connection";
-            this.Connection.Name = "Connection";
             // 
             // btnAddNew
             // 
@@ -136,6 +103,46 @@
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
+            // cbOpenGrouping
+            // 
+            this.cbOpenGrouping.HeaderText = "(";
+            this.cbOpenGrouping.Name = "cbOpenGrouping";
+            this.cbOpenGrouping.ReadOnly = true;
+            this.cbOpenGrouping.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cbOpenGrouping.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.cbOpenGrouping.Width = 25;
+            // 
+            // txtLeftItem
+            // 
+            this.txtLeftItem.HeaderText = "Left Item";
+            this.txtLeftItem.Name = "txtLeftItem";
+            this.txtLeftItem.ReadOnly = true;
+            // 
+            // txtOperator
+            // 
+            this.txtOperator.HeaderText = "Operator";
+            this.txtOperator.Name = "txtOperator";
+            this.txtOperator.ReadOnly = true;
+            // 
+            // txtRightItem
+            // 
+            this.txtRightItem.HeaderText = "Right Item";
+            this.txtRightItem.Name = "txtRightItem";
+            this.txtRightItem.ReadOnly = true;
+            // 
+            // cbCloseGrouping
+            // 
+            this.cbCloseGrouping.HeaderText = ")";
+            this.cbCloseGrouping.Name = "cbCloseGrouping";
+            this.cbCloseGrouping.ReadOnly = true;
+            this.cbCloseGrouping.Width = 25;
+            // 
+            // txtConnection
+            // 
+            this.txtConnection.HeaderText = "Connection";
+            this.txtConnection.Name = "txtConnection";
+            this.txtConnection.ReadOnly = true;
+            // 
             // ConditionListView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -160,11 +167,11 @@
         private System.Windows.Forms.Button btnModify;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnExecute;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn OpenGrouping;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LeftItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Operator;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RightItem;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn CloseGrouping;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Connection;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cbOpenGrouping;
+        private System.Windows.Forms.DataGridViewTextBoxColumn txtLeftItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn txtOperator;
+        private System.Windows.Forms.DataGridViewTextBoxColumn txtRightItem;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cbCloseGrouping;
+        private System.Windows.Forms.DataGridViewTextBoxColumn txtConnection;
     }
 }

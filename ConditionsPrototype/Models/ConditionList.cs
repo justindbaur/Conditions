@@ -96,11 +96,11 @@ namespace ConditionsPrototype.Models
         {
             get
             {
-                return Evaluate(this);
+                return Evaluate(this.conditions);
             }
         }
 
-        private bool Evaluate(ConditionList conditions)
+        private bool Evaluate(List<Condition> conditions)
         {
             if (conditions.Count == 0)
             {
@@ -121,23 +121,29 @@ namespace ConditionsPrototype.Models
             {
                 if (conditions[i].LeftGrouping)
                 {
-                    var groupCount = conditions.FindGroupLength(i);
+                    var groupCount = FindGroupLength(i, conditions);
 
                     if (groupCount == -1)
                     {
                         // A valid group end could not be found for the group start. Configuration must be wrong
                         throw new InvalidProgramException();
                     }
-                    else if (groupCount == 0)
+                    else if (groupCount == 0 && i != 0)
                     {
-                        //Group is just itself
+                        // The group just surround that single item
+                        previousOutcome = conditions[i].Outcome;
+                        previousConnector = conditions[i].ConditionConnector;
                     }
-                    else
+                    else if (i != 0 || groupCount != conditions.Count)
                     {
-                        //Insert the sub items list back into the main list
-                        previousConnector = conditions[i + groupCount].ConditionConnector;
-                        previousOutcome = Evaluate(new ConditionList(conditions.GetRange(i, groupCount).ToList()));
-                        i = i + groupCount;
+                        previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
+                        previousOutcome = Evaluate(conditions.GetRange(i, groupCount).ToList());
+                        i = i + (groupCount - 1);
+
+                        // Need to combine group with previous data if it is there
+
+
+                        continue;
                     }
                 }
 
@@ -167,34 +173,18 @@ namespace ConditionsPrototype.Models
             return previousOutcome;
         }
 
-        private int FindNextOpen()
-        {
-            return conditions.FindIndex(con => con.LeftGrouping);
-        }
-
-        private int FindNextEnd()
-        {
-            return conditions.FindIndex(con => con.RightGrouping);
-        }
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="start"></param>
         /// <returns></returns>
-        private int FindGroupLength(int start)
+        private int FindGroupLength(int start, List<Condition> conditions)
         {
-            if (conditions.Count == 0)
+            if (conditions.Count == 0 || !conditions[start].LeftGrouping)
             {
                 return -1;
             }
-
-            // If the condition in the opening group index does not open a group then return false
-            if (!conditions[start].LeftGrouping)
-            {
-                return -1;
-            }
-
+            
             int groupEnd = 0;
             int count = 0;
 
@@ -218,8 +208,6 @@ namespace ConditionsPrototype.Models
                 {
                     return count;
                 }
-
-                
             }
             return -1;
         }
