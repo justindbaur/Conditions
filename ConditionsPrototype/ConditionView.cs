@@ -44,7 +44,7 @@ namespace ConditionsPrototype
             cbLeftVariable.DataSource = ConditionListView.Variables.ToList();
             cbVariable.DataSource = ConditionListView.Variables.ToList();
             cbOperator.DataSource = operators.ToList();
-            cbOperator.SelectedItem = curCondition.conditionOperator;
+            cbOperator.SelectedItem = curCondition.ConditionOperator;
             cbOperator.DisplayMember = "Symbol";
             cbOpenGrouping.Checked = curCondition.LeftGrouping;
             cbCloseGrouping.Checked = curCondition.RightGrouping;
@@ -62,11 +62,11 @@ namespace ConditionsPrototype
             else
             {
                 rbgVariable.Checked = true;
-                cbVariable.SelectedItem = ((Variable)curCondition.RightValue);
+                cbVariable.SelectedItem = ((Variable)curCondition.RightItem);
             }
 
             cbConnector.DataSource = System.Enum.GetValues(typeof(Connector));
-            cbConnector.SelectedItem = curCondition.conditionConnector;
+            cbConnector.SelectedItem = curCondition.ConditionConnector;
 
         }
 
@@ -78,7 +78,7 @@ namespace ConditionsPrototype
             if (rbgVariable.Checked)
             {
                 curCondition.ItemType = ItemType.Dynamic;
-                curCondition.RightValue = cbVariable.SelectedItem;
+                curCondition.RightItem = cbVariable.SelectedItem;
             }
             else
             {
@@ -86,7 +86,7 @@ namespace ConditionsPrototype
 
                 if (float.TryParse(txtConstant.Text, out float num))
                 {
-                    curCondition.RightValue = num;
+                    curCondition.RightItem = num;
                 }
                 else
                 {
@@ -96,8 +96,8 @@ namespace ConditionsPrototype
             }
 
             curCondition.LeftItem = (Variable)cbLeftVariable.SelectedItem;
-            curCondition.conditionOperator = (Enum.Operator)cbOperator.SelectedItem;
-            curCondition.conditionConnector = (Connector)cbConnector.SelectedItem;
+            curCondition.ConditionOperator = (Enum.Operator)cbOperator.SelectedItem;
+            curCondition.ConditionConnector = (Connector)cbConnector.SelectedItem;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

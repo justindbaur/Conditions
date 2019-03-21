@@ -28,9 +28,11 @@ namespace ConditionsPrototype
             Variables = new VariableList();
             Variables.Add(new Variable("ValueOne", 1));
             Variables.Add(new Variable("ValueTen", 10));
+            Variables.Add(new Variable("ValueFive", 5));
 
             conditions.Add(new Condition(Variables[0], Enum.Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
             conditions.Add(new Condition(Variables[1], Enum.Operator.GreaterThan, 4));
+            conditions.Add(new Condition(Variables[2], Enum.Operator.LessThan, 5, Grouping.CloseGrouping, Connector.Or));
 
             LoadList();
 
@@ -71,6 +73,11 @@ namespace ConditionsPrototype
                 conditions[selectedRowIndex] = conditionView.curCondition;
                 LoadList();
             }
+        }
+
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Outcome: {conditions.Outcome}");
         }
     }
 }

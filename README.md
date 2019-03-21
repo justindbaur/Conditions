@@ -14,4 +14,20 @@ Rules it must follow:
 Strategies:
 * Take first item and test if it is within a group
 * If in group find that items group and test that group (Go to the beginning)
-* 
+
+
+
+Tests:
+
+( ValueOne      =   10   OR
+  ValueFive     =   5  ) AND
+  ValueThree    =   3    AND
+
+Answer True
+
+( ValueOne     =    2     OR     
+( ValueThree   =    3     AND
+  ValueOne     =    1  )  OR
+  ValueFive    =    5  )  AND
+
+Answer True

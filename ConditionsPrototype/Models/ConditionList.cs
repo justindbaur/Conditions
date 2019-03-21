@@ -102,44 +102,6 @@ namespace ConditionsPrototype.Models
 
         private bool Evaluate(ConditionList conditions)
         {
-            //If conditions are empty return true
-            //if (conditions.Count == 0)
-            //{
-            //    return true;
-            //}
-
-            ////If there is only one condition return that items outcome
-            //if (conditions.Count == 1)
-            //{
-            //    return conditions[0].Outcome;
-            //}
-
-            //// Find open groupings if they exist
-            //var startIndex = conditions.FindNextOpen();
-
-            //if (startIndex != -1)
-            //{
-            //    var endIndex = conditions.FindNextEnd();
-
-            //    if (endIndex != -1)
-            //    {
-            //        if (startIndex <= endIndex)
-            //        {
-            //            // 
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    // Handle stuff
-            //}
-
-
-
-
-
-
-            
             if (conditions.Count == 0)
             {
                 return true;
@@ -150,9 +112,8 @@ namespace ConditionsPrototype.Models
                 return conditions[0].Outcome;
             }
 
-
-            bool current = true;
-            Connector currentConnector;
+            bool previousOutcome = true;
+            Connector previousConnector = Connector.Or;
 
 
             // For splicing in the correct answer for a group
@@ -174,11 +135,36 @@ namespace ConditionsPrototype.Models
                     else
                     {
                         //Insert the sub items list back into the main list
-                        conditions[i + groupCount] = Evaluate(new ConditionList(conditions.GetRange(i, groupCount).ToList()));
+                        previousConnector = conditions[i + groupCount].ConditionConnector;
+                        previousOutcome = Evaluate(new ConditionList(conditions.GetRange(i, groupCount).ToList()));
+                        i = i + groupCount;
+                    }
+                }
+
+                if (i == 0)
+                {
+                    previousOutcome = conditions[i].Outcome;
+                    previousConnector = conditions[i].ConditionConnector;
+                }
+                else
+                {
+                    bool curOutcome = conditions[i].Outcome;
+
+                    switch (previousConnector)
+                    {
+                        case Connector.And:
+                            previousOutcome = previousOutcome && curOutcome;
+                            break;
+                        case Connector.Or:
+                            previousOutcome = previousOutcome || curOutcome;
+                            break;
+                        default:
+                            throw new Exception();
                     }
                 }
             }
 
+            return previousOutcome;
         }
 
         private int FindNextOpen()
@@ -232,6 +218,8 @@ namespace ConditionsPrototype.Models
                 {
                     return count;
                 }
+
+                
             }
             return -1;
         }

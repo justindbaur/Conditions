@@ -57,7 +57,6 @@
             this.dgvConditions.Location = new System.Drawing.Point(12, 12);
             this.dgvConditions.MultiSelect = false;
             this.dgvConditions.Name = "dgvConditions";
-            this.dgvConditions.ReadOnly = true;
             this.dgvConditions.RowHeadersVisible = false;
             this.dgvConditions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvConditions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -68,7 +67,6 @@
             // 
             this.OpenGrouping.HeaderText = "(";
             this.OpenGrouping.Name = "OpenGrouping";
-            this.OpenGrouping.ReadOnly = true;
             this.OpenGrouping.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.OpenGrouping.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.OpenGrouping.Width = 25;
@@ -77,32 +75,27 @@
             // 
             this.LeftItem.HeaderText = "Left Item";
             this.LeftItem.Name = "LeftItem";
-            this.LeftItem.ReadOnly = true;
             // 
             // Operator
             // 
             this.Operator.HeaderText = "Operator";
             this.Operator.Name = "Operator";
-            this.Operator.ReadOnly = true;
             // 
             // RightItem
             // 
             this.RightItem.HeaderText = "Right Item";
             this.RightItem.Name = "RightItem";
-            this.RightItem.ReadOnly = true;
             // 
             // CloseGrouping
             // 
             this.CloseGrouping.HeaderText = ")";
             this.CloseGrouping.Name = "CloseGrouping";
-            this.CloseGrouping.ReadOnly = true;
             this.CloseGrouping.Width = 25;
             // 
             // Connection
             // 
             this.Connection.HeaderText = "Connection";
             this.Connection.Name = "Connection";
-            this.Connection.ReadOnly = true;
             // 
             // btnAddNew
             // 
@@ -141,6 +134,7 @@
             this.btnExecute.TabIndex = 4;
             this.btnExecute.Text = "Execute";
             this.btnExecute.UseVisualStyleBackColor = true;
+            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
             // ConditionListView
             // 
