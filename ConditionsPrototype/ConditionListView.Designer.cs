@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.dgvConditions = new System.Windows.Forms.DataGridView();
-            this.btnAddNew = new System.Windows.Forms.Button();
-            this.btnModify = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnExecute = new System.Windows.Forms.Button();
             this.cbOpenGrouping = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.txtLeftItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtOperator = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtRightItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cbCloseGrouping = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.txtConnection = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAddNew = new System.Windows.Forms.Button();
+            this.btnModify = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnExecute = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvConditions)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,47 +61,8 @@
             this.dgvConditions.RowHeadersVisible = false;
             this.dgvConditions.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvConditions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvConditions.Size = new System.Drawing.Size(473, 368);
+            this.dgvConditions.Size = new System.Drawing.Size(473, 447);
             this.dgvConditions.TabIndex = 0;
-            // 
-            // btnAddNew
-            // 
-            this.btnAddNew.Location = new System.Drawing.Point(410, 415);
-            this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(75, 23);
-            this.btnAddNew.TabIndex = 1;
-            this.btnAddNew.Text = "Add";
-            this.btnAddNew.UseVisualStyleBackColor = true;
-            this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
-            // 
-            // btnModify
-            // 
-            this.btnModify.Location = new System.Drawing.Point(329, 415);
-            this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(75, 23);
-            this.btnModify.TabIndex = 2;
-            this.btnModify.Text = "Modify";
-            this.btnModify.UseVisualStyleBackColor = true;
-            this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(248, 415);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 3;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnExecute
-            // 
-            this.btnExecute.Location = new System.Drawing.Point(12, 415);
-            this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(75, 23);
-            this.btnExecute.TabIndex = 4;
-            this.btnExecute.Text = "Execute";
-            this.btnExecute.UseVisualStyleBackColor = true;
-            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
             // cbOpenGrouping
             // 
@@ -143,11 +104,50 @@
             this.txtConnection.Name = "txtConnection";
             this.txtConnection.ReadOnly = true;
             // 
+            // btnAddNew
+            // 
+            this.btnAddNew.Location = new System.Drawing.Point(410, 465);
+            this.btnAddNew.Name = "btnAddNew";
+            this.btnAddNew.Size = new System.Drawing.Size(75, 23);
+            this.btnAddNew.TabIndex = 1;
+            this.btnAddNew.Text = "Add";
+            this.btnAddNew.UseVisualStyleBackColor = true;
+            this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
+            // 
+            // btnModify
+            // 
+            this.btnModify.Location = new System.Drawing.Point(329, 465);
+            this.btnModify.Name = "btnModify";
+            this.btnModify.Size = new System.Drawing.Size(75, 23);
+            this.btnModify.TabIndex = 2;
+            this.btnModify.Text = "Modify";
+            this.btnModify.UseVisualStyleBackColor = true;
+            this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(248, 465);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 3;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnExecute
+            // 
+            this.btnExecute.Location = new System.Drawing.Point(12, 465);
+            this.btnExecute.Name = "btnExecute";
+            this.btnExecute.Size = new System.Drawing.Size(75, 23);
+            this.btnExecute.TabIndex = 4;
+            this.btnExecute.Text = "Execute";
+            this.btnExecute.UseVisualStyleBackColor = true;
+            this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
+            // 
             // ConditionListView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 450);
+            this.ClientSize = new System.Drawing.Size(492, 500);
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnModify);

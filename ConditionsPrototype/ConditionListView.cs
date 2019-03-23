@@ -39,7 +39,7 @@ namespace ConditionsPrototype
             Variables.Add(new Variable("Value9" , 9 ));
             Variables.Add(new Variable("Value10", 10));
 
-            int testNum = 8;
+            int testNum = 5;
 
             switch (testNum)
             {
@@ -49,42 +49,75 @@ namespace ConditionsPrototype
                     conditions.Add(new Condition(Variables[5], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
                     conditions.Add(new Condition(Variables[5], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
                     conditions.Add(new Condition(Variables[5], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    // Outcome: 
                     break;
                 case 2:
                     conditions.Add(new Condition(Variables[10], Operator.GreaterThan, 8, Grouping.OpenGrouping, Connector.And));
+                    // Outcome: 
                     break;
                 case 3:
                     conditions.Add(new Condition(Variables[7], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[5], Operator.EqualTo, 10));
+                    // Outcome: 
                     break;
                 case 4:
-                    conditions.Add(new Condition(Variables[2], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[1], Operator.NotEqualTo, 1, Grouping.OpenAndCloseGrouping, Connector.Or));
+                    // Outcome:  
                     break;
                 case 5:
-                    conditions.Add(new Condition(Variables[6], Operator.GreaterThanOrEqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[9], Operator.GreaterThanOrEqualTo, 8, Grouping.OpenGrouping, Connector.Xor));
+                    conditions.Add(new Condition(Variables[6], Operator.EqualTo, 6, Grouping.CloseGrouping, Connector.And));
+                    // Outcome: 
                     break;
                 case 6:
+                    conditions.Add(new Condition(Variables[10], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[1], Operator.GreaterThan, 4));
+                    conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.Or));
+                    conditions.Add(new Condition(Variables[10], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[1], Operator.GreaterThan, 4));
+                    conditions.Add(new Condition(Variables[9], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[10], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[7], Operator.GreaterThan, 4));
+                    conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.And));
                     conditions.Add(new Condition(Variables[8], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[4], Operator.GreaterThanOrEqualTo, 4));
+                    conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.Or));
+                    conditions.Add(new Condition(Variables[5], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[1], Operator.GreaterThan, 4));
+                    conditions.Add(new Condition(Variables[8], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.Or));
+                    conditions.Add(new Condition(Variables[10], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.Or));
+                    conditions.Add(new Condition(Variables[9], Operator.GreaterThan, 4, Grouping.NoGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.And));
+                    // Outcome: true
                     break;
                 case 7:
                     conditions.Add(new Condition(Variables[1], Operator.LessThan, 8, Grouping.OpenGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[3], Operator.GreaterThan, 2, Grouping.OpenGrouping, Connector.Or));
+                    conditions.Add(new Condition(Variables[5], Operator.EqualTo, 4));
+                    conditions.Add(new Condition(Variables[6], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.And));
+                    conditions.Add(new Condition(Variables[10], Operator.GreaterThan, 5, Grouping.CloseGrouping, Connector.Or));
+                    // Outcome:
                     break;
                 case 8:
                     conditions.Add(new Condition(Variables[10], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
                     conditions.Add(new Condition(Variables[1], Operator.GreaterThan, 4));
-                    conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.Or));
+                    conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.And));
                     conditions.Add(new Condition(Variables[10], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
                     conditions.Add(new Condition(Variables[1], Operator.GreaterThan, 4));
-                    conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.Or));
+                    conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.And));
+                    // Outcome: 
                     break;
                 case 9:
                     conditions.Add(new Condition(Variables[10], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
                     conditions.Add(new Condition(Variables[1], Operator.GreaterThan, 4));
                     conditions.Add(new Condition(Variables[2], Operator.LessThan, 5, Grouping.CloseGrouping, Connector.Or));
+                    // Outcome: 
                     break;
                 case 10:
                     conditions.Add(new Condition(Variables[10], Operator.EqualTo, 8, Grouping.OpenGrouping, Connector.And));
                     conditions.Add(new Condition(Variables[9], Operator.LessThan, 15, Grouping.CloseGrouping, Connector.Or));
                     conditions.Add(new Condition(Variables[5], Operator.NotEqualTo, 6, Grouping.NoGrouping, Connector.Or));
+                    // Outcome: 
                     break;
                 default:
                     break;
@@ -137,7 +170,7 @@ namespace ConditionsPrototype
             sw.Start();
             bool result = conditions.Outcome;
             sw.Stop();
-            MessageBox.Show($"Outcome: { result }\nTicks: { sw.ElapsedTicks }");
+            MessageBox.Show($"Outcome: { result }\nMilliseconds: { sw.ElapsedMilliseconds }\nTicks: { sw.ElapsedTicks }");
             sw.Reset();
 
         }

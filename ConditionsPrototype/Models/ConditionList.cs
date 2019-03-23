@@ -102,88 +102,94 @@ namespace ConditionsPrototype.Models
 
         private bool Evaluate(List<Condition> conditions)
         {
-            if (conditions.Count == 0)
-            {
-                return true;
-            }
-
-            if (conditions.Count == 1)
-            {
-                return conditions[0].Outcome;
-            }
-
+            // Set starting variables
             bool initialItem = true;
             bool previousOutcome = true;
             Connector previousConnector = Connector.Or;
 
-
-            // For splicing in the correct answer for a group
             for (int i = 0; i < conditions.Count; i++)
             {
                 if (conditions[i].LeftGrouping)
                 {
                     var groupCount = FindGroupLength(i, conditions);
 
-                    if (groupCount == -1)
-                    {
-                        // A valid group end could not be found for the group start. Configuration must be wrong
-                        throw new InvalidProgramException();
-                    }
-                    else if (groupCount == 0 && i != 0)
-                    {
-                        // The group just surround that single item
-                        previousOutcome = conditions[i].Outcome;
-                        previousConnector = conditions[i].ConditionConnector;
-                    }
-                    else if (i != 0 || groupCount != conditions.Count)
+                    // Is group just that single item?
+                    if (groupCount == 0)
                     {
                         if (initialItem)
                         {
+                            previousOutcome = conditions[i].Outcome;
+                            previousConnector = conditions[i].ConditionConnector;
+                            initialItem = false;
+                            continue;
+                        }
+                        else
+                        {
+                            previousOutcome = FindOutcome(previousOutcome, previousConnector, conditions[i].Outcome);
+                            previousConnector = conditions[i].ConditionConnector;
+                            continue;
+                        }
+                    }
+                    else if (groupCount < conditions.Count) // If group is only sub group of entire list evalulate separetley
+                    {
+                        if (initialItem)
+                        {
+                            // Evaluate the sub group to find it outcome
+                            previousOutcome = Evaluate(conditions.GetRange(i, groupCount));
+                            // Set the end group items connector to the previous connector
                             previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
-                            previousOutcome = Evaluate(conditions.GetRange(i, groupCount).ToList());
+                            // Progress the pointer to the end of the group
                             i = i + (groupCount - 1);
                             initialItem = false;
                             continue;
                         }
-
-                        bool curOutcome = Evaluate(conditions.GetRange(i, groupCount).ToList());
-
-                        switch (previousConnector)
+                        else
                         {
-                            case Connector.And:
-                                previousOutcome = previousOutcome && curOutcome;
-                                break;
-                            case Connector.Or:
-                                previousOutcome = previousOutcome || curOutcome;
-                                break;
-                            default:
-                                throw new Exception();
+                            // Evaluate sub group with previous item
+                            previousOutcome = FindOutcome(previousOutcome, previousConnector, Evaluate(conditions.GetRange(i, groupCount)));
+
+                            previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
+
+                            i = i + (groupCount - 1);
+
+                            continue;
                         }
-
-                        previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
                     }
-                }
+                    else if (groupCount == conditions.Count)
+                    {
+                        if (initialItem)
+                        {
+                            previousOutcome = conditions[i].Outcome;
 
-                if (initialItem)
-                {
-                    previousOutcome = conditions[i].Outcome;
-                    previousConnector = conditions[i].ConditionConnector;
-                    initialItem = false;
+                            previousConnector = conditions[i].ConditionConnector;
+                            initialItem = false;
+                            continue;
+                        }
+                        else
+                        {
+                            previousOutcome = FindOutcome(previousOutcome, previousConnector, conditions[i].Outcome);
+                            previousConnector = conditions[i].ConditionConnector;
+                            continue;
+                        }
+                    }
                 }
                 else
                 {
-                    bool curOutcome = conditions[i].Outcome;
+                    // Item does not start a group
 
-                    switch (previousConnector)
+                    // Item is initial item
+                    if (initialItem)
                     {
-                        case Connector.And:
-                            previousOutcome = previousOutcome && curOutcome;
-                            break;
-                        case Connector.Or:
-                            previousOutcome = previousOutcome || curOutcome;
-                            break;
-                        default:
-                            throw new Exception();
+                        previousOutcome = conditions[i].Outcome;
+                        previousConnector = conditions[i].ConditionConnector;
+                        initialItem = false;
+                        continue;
+                    }
+                    else
+                    {
+                        previousOutcome = FindOutcome(previousOutcome, previousConnector, conditions[i].Outcome);
+                        previousConnector = conditions[i].ConditionConnector;
+                        continue;
                     }
                 }
             }
@@ -200,7 +206,7 @@ namespace ConditionsPrototype.Models
         {
             if (conditions.Count == 0 || !conditions[start].LeftGrouping)
             {
-                return -1;
+                throw new Exception("Start position does not start a group");
             }
             
             int groupEnd = 0;
@@ -227,7 +233,23 @@ namespace ConditionsPrototype.Models
                     return count;
                 }
             }
-            return -1;
+
+            throw new Exception("End Point could not be found.");
+        }
+
+        private bool FindOutcome(bool first, Connector connector, bool second)
+        {
+            switch (connector)
+            {
+                case Connector.And:
+                    return first && second;
+                case Connector.Or:
+                    return first || second;
+                case Connector.Xor:
+                    return first ^ second;
+                default:
+                    throw new ArgumentOutOfRangeException($"Connector of { connector } not recognized.");
+            }
         }
     }
 }

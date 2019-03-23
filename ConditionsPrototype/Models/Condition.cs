@@ -240,7 +240,8 @@ namespace ConditionsPrototype.Models
     public enum Connector
     {
         And,
-        Or
+        Or,
+        Xor
     }
 
     public enum ItemType
