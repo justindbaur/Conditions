@@ -112,6 +112,7 @@ namespace ConditionsPrototype.Models
                 return conditions[0].Outcome;
             }
 
+            bool initialItem = true;
             bool previousOutcome = true;
             Connector previousConnector = Connector.Or;
 
@@ -136,21 +137,38 @@ namespace ConditionsPrototype.Models
                     }
                     else if (i != 0 || groupCount != conditions.Count)
                     {
+                        if (initialItem)
+                        {
+                            previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
+                            previousOutcome = Evaluate(conditions.GetRange(i, groupCount).ToList());
+                            i = i + (groupCount - 1);
+                            initialItem = false;
+                            continue;
+                        }
+
+                        bool curOutcome = Evaluate(conditions.GetRange(i, groupCount).ToList());
+
+                        switch (previousConnector)
+                        {
+                            case Connector.And:
+                                previousOutcome = previousOutcome && curOutcome;
+                                break;
+                            case Connector.Or:
+                                previousOutcome = previousOutcome || curOutcome;
+                                break;
+                            default:
+                                throw new Exception();
+                        }
+
                         previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
-                        previousOutcome = Evaluate(conditions.GetRange(i, groupCount).ToList());
-                        i = i + (groupCount - 1);
-
-                        // Need to combine group with previous data if it is there
-
-
-                        continue;
                     }
                 }
 
-                if (i == 0)
+                if (initialItem)
                 {
                     previousOutcome = conditions[i].Outcome;
                     previousConnector = conditions[i].ConditionConnector;
+                    initialItem = false;
                 }
                 else
                 {
