@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConditionsPrototype.Models
 {
@@ -103,9 +100,8 @@ namespace ConditionsPrototype.Models
         private bool Evaluate(List<Condition> conditions)
         {
             // Set starting variables
-            bool initialItem = true;
             bool previousOutcome = true;
-            Connector previousConnector = Connector.Or;
+            Connector previousConnector = Connector.And;
 
             for (int i = 0; i < conditions.Count; i++)
             {
@@ -116,81 +112,32 @@ namespace ConditionsPrototype.Models
                     // Is group just that single item?
                     if (groupCount == 0)
                     {
-                        if (initialItem)
-                        {
-                            previousOutcome = conditions[i].Outcome;
-                            previousConnector = conditions[i].ConditionConnector;
-                            initialItem = false;
-                            continue;
-                        }
-                        else
-                        {
-                            previousOutcome = FindOutcome(previousOutcome, previousConnector, conditions[i].Outcome);
-                            previousConnector = conditions[i].ConditionConnector;
-                            continue;
-                        }
-                    }
-                    else if (groupCount < conditions.Count) // If group is only sub group of entire list evalulate separetley
-                    {
-                        if (initialItem)
-                        {
-                            // Evaluate the sub group to find it outcome
-                            previousOutcome = Evaluate(conditions.GetRange(i, groupCount));
-                            // Set the end group items connector to the previous connector
-                            previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
-                            // Progress the pointer to the end of the group
-                            i = i + (groupCount - 1);
-                            initialItem = false;
-                            continue;
-                        }
-                        else
-                        {
-                            // Evaluate sub group with previous item
-                            previousOutcome = FindOutcome(previousOutcome, previousConnector, Evaluate(conditions.GetRange(i, groupCount)));
-
-                            previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
-
-                            i = i + (groupCount - 1);
-
-                            continue;
-                        }
-                    }
-                    else if (groupCount == conditions.Count)
-                    {
-                        if (initialItem)
-                        {
-                            previousOutcome = conditions[i].Outcome;
-
-                            previousConnector = conditions[i].ConditionConnector;
-                            initialItem = false;
-                            continue;
-                        }
-                        else
-                        {
-                            previousOutcome = FindOutcome(previousOutcome, previousConnector, conditions[i].Outcome);
-                            previousConnector = conditions[i].ConditionConnector;
-                            continue;
-                        }
-                    }
-                }
-                else
-                {
-                    // Item does not start a group
-
-                    // Item is initial item
-                    if (initialItem)
-                    {
-                        previousOutcome = conditions[i].Outcome;
-                        previousConnector = conditions[i].ConditionConnector;
-                        initialItem = false;
-                        continue;
-                    }
-                    else
-                    {
                         previousOutcome = FindOutcome(previousOutcome, previousConnector, conditions[i].Outcome);
                         previousConnector = conditions[i].ConditionConnector;
                         continue;
                     }
+                    else if (groupCount < conditions.Count) // If group is only sub group of entire list evalulate qpty7
+                    {
+                        // Evaluate sub group with previous item
+                        previousOutcome = FindOutcome(previousOutcome, previousConnector, Evaluate(conditions.GetRange(i, groupCount)));
+                        previousConnector = conditions[i + (groupCount - 1)].ConditionConnector;
+                        i = i + (groupCount - 1);
+                        continue;
+                    }
+                    else if (groupCount == conditions.Count)
+                    {
+
+                        previousOutcome = FindOutcome(previousOutcome, previousConnector, conditions[i].Outcome);
+                        previousConnector = conditions[i].ConditionConnector;
+                        continue;
+                    }
+                }
+                else
+                {
+
+                    previousOutcome = FindOutcome(previousOutcome, previousConnector, conditions[i].Outcome);
+                    previousConnector = conditions[i].ConditionConnector;
+                    continue;
                 }
             }
 
@@ -208,7 +155,7 @@ namespace ConditionsPrototype.Models
             {
                 throw new Exception("Start position does not start a group");
             }
-            
+
             int groupEnd = 0;
             int count = 0;
 

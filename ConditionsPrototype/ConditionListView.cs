@@ -18,6 +18,7 @@ namespace ConditionsPrototype
         public ConditionList conditions;
         public static VariableList Variables;
 
+
         private BindingSource bindingSource = new BindingSource();
 
         public ConditionListView()
@@ -39,7 +40,7 @@ namespace ConditionsPrototype
             Variables.Add(new Variable("Value9" , 9 ));
             Variables.Add(new Variable("Value10", 10));
 
-            int testNum = 5;
+            int testNum = 6;
 
             switch (testNum)
             {
@@ -167,12 +168,12 @@ namespace ConditionsPrototype
         private void btnExecute_Click(object sender, EventArgs e)
         {
             var sw = new Stopwatch();
+
             sw.Start();
             bool result = conditions.Outcome;
             sw.Stop();
             MessageBox.Show($"Outcome: { result }\nMilliseconds: { sw.ElapsedMilliseconds }\nTicks: { sw.ElapsedTicks }");
             sw.Reset();
-
         }
     }
 }
